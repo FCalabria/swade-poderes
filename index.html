@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<head>
+  <script>
+    const powers = [
+      {
+        title: 'Adivinación',
+        level: 'H',
+        pp: 5,
+        distance: 'Personal',
+        duration: '5 minutos',
+        description:
+          'Preparar el hechizo lleva un minuto entero sin interrupción y debe realizarse en un lugar apropiado para el ser o espíritu que se quiere contactar.\nPermite contactar con la entidad y realizar cualquier pregunta que tenga en mente. El ser debe contestar con veracidad si sabe la respuesta, pero puede ser tan directo o ambiguo como indiquen su personalidad y papel en la campaña. En general, un aumento en el lanzamiento indica que el ser es más solícito, tiene mayores conocimientos o es más directo de lo habitual.\nLos espíritus del inframundo normalmente solo conocen información relacionada con su vida y muerte: no tienen por qué saber la identidad de su asesino. Del mismo modo, los espíritus de la naturaleza solo conocen información pertinente a su entorno local, los demonios solo saben cosas sobre aquellos individuos que vigilan, etc.\nCuando se ha conversado con un espíritu, el lanzador no puede volver a contactar con él durante las siguientes veinticuatro horas. El DJ podría extender esta limitación al conjunto de espíritus de una localización.',
+        modifications: [],
+      },
+      {
+        title: 'Alivio',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 'Instantáneo / 1 hora',
+        description:
+          'Permite recuperarse de los estados negativos o de los efectos de la fatiga.\n<b>Aliviar:</b> Elimina uno de los estados siguientes (dos con el aumento): aturdido, distraído o vulnerable. Cuando afecta a más de un objetivo, puede elegir estados distintos en cada uno.\nNo puede eliminar estados negativos causados por efectos que estén activos sin que el origen sea antes eliminado\n<b>Entumecer:</b> Reduce las penalizaciones totales por heridas y fatiga del objetivo en uno (dos con el aumento). Este efecto dura una hora. No elimina realmente las heridas o la fatiga, solo permite ignorar las penalizaciones. Si el objetivo queda incapacitado, seguirá incapacitado con normalidad y alivio no servirá de nada.',
+        modifications: [
+          {
+            title: 'Conmoción (+1)',
+            description:
+              'Solo al aliviar. Puede afectar al estado conmoción. En este caso, se eliminan por completo todos los efectos de estar conmocionado.',
+          },
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Amistad animal',
+        level: 'N',
+        pp: 'Especial',
+        distance: 'Astucia',
+        duration: '10 min',
+        description:
+          'Este hechizo permite a un individuo comunicarse y guiar las acciones de las bestias naturales. El coste base de lanzamiento es igual a la suma de su Tamaño (mínimo 1 por criatura, consulta el Capítulo 6).\nEl éxito indica que las criaturas obedecen las órdenes simples del lanzador, como haría un perro bien adiestrado. Atacarán a los enemigos y pondrán sus vidas en peligro por su nuevo amo. Un aumento en la tirada de habilidad arcana significa que las bestias son más obedientes. No llegarán a suicidarse por él, pero sí superarán sus miedos innatos.\nTambién es posible controlar hordas de criaturas mediante este poder. Una horda pequeña cuesta 1 PP, una mediana, 2 PP y una grande, 3 PP.\nAmistad animal solo funciona sobre criaturas naturales con inteligencia animal, nunca humanoides, y tampoco tiene ningún efecto sobre animales “sobrenaturales”, por ejemplo, criaturas mágicas o invocadas mediante la magia.',
+        modifications: [
+          {
+            title: 'Jinete mental (+1)',
+            description:
+              'El lanzador puede comunicarse mentalmente con él y utilizar los sentidos de cualquier animal que haya hechizado.',
+          },
+        ],
+      },
+      {
+        title: 'Aura dañina',
+        level: 'E',
+        pp: 4,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Genera un campo de energía peligrosa en torno al objetivo capaz de dañar a aquellos adversarios tan estúpidos como para acercarse demasiado.\nAl final del turno del personaje afectado por este poder, todos los seres adyacentes (¡incluyendo sus aliados!) sufren de forma automática 2d4 de daño.',
+        modifications: [
+          {
+            title: 'Daño (+2)',
+            description: 'Aumenta el daño a 2d6',
+          },
+        ],
+      },
+      {
+        title: 'Barrera',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Crea un muro recto e inmóvil de hasta cinco pasos de largo y un paso de alto (10x2 metros) del material que indique el ornamento, ajustado a la superficie de terreno donde se lance. El grosor dependerá del material con que esté hecho el muro, pero rara vez tiene más de unos cuantos centímetros de grosor.\nEl muro tiene Consistencia 10 y puede destruirse como cualquier otro objeto (consulta Romper cosas en la página 156).\nCuando el hechizo finaliza o el muro se rompe, el material que lo forma se desintegra o desaparece. El ornamento empleado en la construcción de la barrera nunca queda en el mundo físico al concluir los efectos del poder.',
+        modifications: [
+          {
+            title: 'Consistencia superior (+1)',
+            description: 'Aumenta la Consistencia del muro a 12.',
+          },
+          {
+            title: 'Daño (+1)',
+            description:
+              'La barrera causa 2d4 de daño a todo aquel que entre en contacto con ella.',
+          },
+          {
+            title: 'Maleable (+2)',
+            description:
+              'La barrera puede ser circular, cuadrada o adoptar otra forma geométrica básica.',
+          },
+          {
+            title: 'Tamaño (+1)',
+            description: 'Dobla la longitud y altura de la barrera.',
+          },
+        ],
+      },
+      {
+        title: 'Cambio de forma',
+        level: 'N',
+        pp: 'Especial',
+        distance: 'Personal',
+        duration: 5,
+        description:
+          'El lanzador adopta la forma de cualquier animal o criaturas fantástica que exista en esa ambientación. El coste y en qué se puede transformar dependen de su experiencia (pag. 229). Con un aumento, se transforma en una versión especialmente grande: aumenta su Fuerza y Vigor en un dado.\nLas armas y objetos personales del objetivo se funden en su nueva forma, pero cualquier otro objeto que sostenga cae.\nMientras está transformado, el personaje conserva sus propias ventajas y desventajas, Astucia, Espíritu y las habilidades asociadas. Gana la Fuerza, Agilidad, Vigor y las habilidades asociadas del animal. No puede hablar ni usar sus propios poderes, aunque sí mantener aquellos que haya activado anteriormente. El poder confiere las capacidades naturales innatas de la criatura relacionadas con su forma, pero no las de carácter mágico.\n<b>Tamaño:</b> El lanzador no gana la capacidad de soportar heridas extras cuando se transforma en criaturas Grandes, Enormes o Colosales.',
+        modifications: [
+          {
+            title: 'Habla (+1)',
+            description: 'El objetivo puede hablar pero no activar poderes',
+          },
+        ],
+      },
+      {
+        title: 'Captura',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Permite al lanzador restringir al objetivo encerrándolo en un cubito de hielo, con bandas de energía u otros ornamentos similares a cuerdas y grilletes (Consistencia 5). Con éxito, se considera que la víctima queda aferrada y con el aumento, inmovilizada.\nLas víctimas pueden escapar durante su turno de acuerdo a lo descrito en <b>Aferrado e inmovilizado</b> (pág. 139).',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+          {
+            title: 'Potente (+2)',
+            description:
+              'El material apresador es especialmente duro o fuerte. Aplica una penalización de -2 a las tiradas para finalizar el efecto y aumenta su Consistencia a 7.',
+          },
+        ],
+      },
+      {
+        title: 'Castigo',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Este poder debe lanzarse sobre un arma de algún tipo. Si se trata de un arma a distancia, afectará a todo su cargador, 20 virotes, flechas, piedras de honda o una carga “completa” de munición (el DJ determina la cantidad exacta en las armas más inusuales).\nCuando el poder se lanza con éxito, aumenta el daño que causa el arma en dos puntos (cuatro con aumento).',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Cavar',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Permite al objetivo fundirse con la tierra natural. Puede permanecer sumergido si prefiere quedarse en una especie de “limbo” o moverse excavando a la mitad de su Paso normal (o Paso completo con un aumento en la tirada de activación).\nUn personaje afectado por este poder puede intentar sorprender a un oponente, superando una tirada opuesta de Sigilo contra el Notar de la víctima. Si el mago vence, trata a la víctima como si esta fuera vulnerable (aunque solo para él); con un aumento, gana superioridad contra ella. Las víctimas en espera pueden intentar interrumpir este ataque antes de que ocurra.\nNormalmente, si la víctima es consciente del personaje, este no podrá atacarla por sorpresa.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+          {
+            title: 'Potencia (+1)',
+            description:
+              'El lanzador puede cavar a través de piedra, cemento u otras superficies semejantes. Ciertas sustancias, como el plástico, cristal o plomo sólido podrían ser inmunes a este poder, según la ambientación.',
+          },
+        ],
+      },
+      {
+        title: 'Ceguera',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Los afectados por este poder notan que su visión se vuelve borrosa (casi ceguera con el aumento).\nEl éxito significa que la víctima sufre una penalización de -2 a todas sus acciones que dependan de la visión y el aumento incrementa esta penalización hasta -4.\nLa víctima intentará recuperarse de forma automática, al final de sus siguientes turnos, con una tirada de Vigor como acción gratuita. El éxito elimina dos puntos de esta penalización y el aumento acaba con sus efectos por completo.',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+          {
+            title: 'Potente (+1)',
+            description:
+              'Aplica una penalización de -2 a las tiradas de Vigor para finalizar el efecto.',
+          },
+        ],
+      },
+      {
+        title: 'Chorro',
+        level: 'N',
+        pp: 2,
+        distance: 'Plantilla de cono',
+        duration: 'Instantáneo',
+        description:
+          'Chorro provoca una gran descarga de energía, capaz de bañar a sus objetivos en fuego ardiente, un cono de vientos helados u otros tipos de sustancias dañinas.\nEl éxito genera una plantilla de área cónica que nace a los pies del lanzador y se extiende alejándose de él en línea recta (consulta Ataques de área, pág. 144). Todo aquello en contacto con la plantilla sufre 2d6 de daño (3d6 con un aumento).',
+        modifications: [
+          {
+            title: 'Daño (+2)',
+            description: 'El chorro causa 3d6 de daño (4d6 con un aumento).',
+          },
+        ],
+      },
+      {
+        title: 'Confusión',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 'Especial',
+        description:
+          'Confusión confunde al objetivo, dejándolo distraído y vulnerable si falla una tirada de Astucia (con -2 en caso de lanzarlo con aumento). La víctima se recupera de ambos estados al final de su siguiente turno.',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+        ],
+      },
+      {
+        title: 'Conmoción',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Conmoción atonta al objetivo con una onda de choque, sonidos y luces fuertes, energía mágica, etc.\NSi se lanza con éxito, la víctima debe superar una tirada de Vigor (-2 con un aumento en la tirada de habilidad arcana) para evitar quedar conmocionada (pág. 147).',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+        ],
+      },
+      {
+        title: 'Curación',
+        level: 'N',
+        pp: 1,
+        distance: 'Toque',
+        duration: 'Instantáneo',
+        description:
+          'Repara el daño si se trata antes de que transcurra una hora. El éxito cura una herida y el aumento, dos. Es posible lanzar más de una vez el hechizo para curar heridas adicionales.\nEn el caso de los Extras, el DJ debe determinar primero si ha sobrevivido (pág. 138). Si es así, el éxito en la tirada de habilidad arcana devuelve a la acción al aliado (estará aturdido).',
+        modifications: [
+          {
+            title: 'Curación mayor (+10)',
+            description:
+              'Sana todas las heridas, incluyendo aquellas con más de una hora de duración.',
+          },
+          {
+            title: 'Lesiones graves (+20)',
+            description:
+              'Puede curar una lesión permanente (pág. 136). Es necesario realizar una hora de preparativos previos y solo se permite una vez por lesión. Si la tirada falla, este lanzador no podrá curar con este hechizo esa lesión específica. Con éxito, el objetivo estará exhausto durante las 24 horas siguiente.',
+          },
+          {
+            title: 'Neutralizar veneno o enfermedad (+1)',
+            description:
+              'Pone fin a cualquier veneno o enfermedad que afecte al objetivo. Cuando la enfermedad o veneno tiene algún modificador asociado, dicho modificador también se aplica a la tirada de habilidad arcana.',
+          },
+        ],
+      },
+      {
+        title: 'Destierro',
+        level: 'V',
+        pp: 3,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Destierro envía a entidades de planos inmateriales a sus dimensiones nativas. Esto incluye fantasmas, demonios, elementales y otros seres semejantes (según determine el DJ).\nPara desterrar a un ser, es necesario derrotarlo en una tirada opuesta entre el Espíritu de la criatura y el resultado de la habilidad arcana del lanzador. El éxito significa que el objetivo queda aturdido y cada aumento provoca una herida.\nSi esta tirada incapacita al objetivo, este regresa a su plano nativo de existencia. Las entidades desterradas no pueden regresar a nuestro mundo hasta que el DJ considere apropiado, como, por ejemplo, hasta la siguiente luna llena, que sean invocadas de nuevo o pase una cierta cantidad de turnos, cuando se trata de una criatura especialmente poderosa y se den las circunstancias apropiadas o esté en un lugar de poder.',
+        modifications: [],
+      },
+      {
+        title: 'Desvío',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Desvía los ataques, cuerpo a cuerpo o a distancia, que tomen al blanco afectado como objetivo.\nUna vez lanzado, los oponentes deben sustraer dos a todas sus tiradas de ataque cuerpo a cuerpo o a distancia dirigidas contra el objetivo así protegido, a elegir en el momento del lanzamiento. Con el aumento, la penalización se aplica a ambos tipos de ataques. La penalización proviene del tipo del ataque, no del tipo de arma usada.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Detección arcana *',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Detección arcana permite al objetivo de este poder ver y detectar todos los efectos, objetos y personas sobrenaturales en su línea de visión. Incluye oponentes invisibles, encantamientos sobre objetos o individuos, artilugios de ciencia extraña, etc. Con un aumento, puede identificar el tipo general de encantamiento (dañino, ocultación, magia arcana, milagros, etc.).\nTambién permite ignorar cuatro puntos de penalizaciones a la hora de atacar enemigos ocultos bajo oscuridad mágica, invisibilidad u otras capacidades semejantes (o todas las penalizaciones con un aumento).\n<b>Detección frente a ocultación:</b> Si se usa contra algo o alguien protegido por ocultamiento arcano, se resuelve como una tirada opuesta de habilidades arcanas. En caso de vencer el ocultamiento, el lanzador no puede superar ya su truco con este lanzamiento del poder, aunque sí se podría finalizar y lanzar de nuevo para ganar un nuevo intento.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'El poder podría afectar a más de un personaje, costando +1 PP por cada objetivo adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Ocultamiento arcano *',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '1 hora',
+        description:
+          'Ocultamiento arcano impide la detección de energías arcanas generadas por un ser u objeto de escala Normal (consulta la Tabla de Tamaño, pág. 261).\n<b>Detección frente a ocultación:</b> Si se usa detección arcana contra algo o alguien protegido por ocultamiento arcano, se resuelve como una tirada opuesta de habilidades arcanas. En caso de vencer el ocultamiento, el beneficiario de detección no puede superar ya su truco con este lanzamiento del poder, aunque sí se podría finalizar y lanzar de nuevo para ganar un nuevo intento.',
+        modifications: [
+          {
+            title: 'Área de efecto (+1/+2)',
+            description:
+              'Por +1 PP, el poder afecta a todo lo presente en una plantilla de área mediana. Por +2 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'El poder podría ocultar más de un objeto, costando +1 PP por cada objetivo adicional.',
+          },
+          {
+            title: 'Potente (+1)',
+            description:
+              'Las tiradas opuestas para atravesar el ocultamiento sufren una penalización de -2.',
+          },
+        ],
+      },
+      {
+        title: 'Disfraz',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '10 min',
+        description:
+          'Permite al individuo afectado asumir el aspecto (pero no las capacidades) de otra persona con su mismo Tamaño y rasgos físicos generales, incluyendo la ropa. No confiere, sin embargo, ninguna capacidad especial de la forma asumida.\nAquellos que tengan una razón para cuestionarse la identidad del afectado pueden realizar una tirada de Notar (-2) para atravesar el poder (-4 cuando se lanza con un aumento) como acción gratuita.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+          {
+            title: 'Tamaño (+1)',
+            description:
+              'El objetivo puede asumir la forma de otro ser con hasta dos puntos de Tamaño más grande o pequeño que él mismo.',
+          },
+        ],
+      },
+      {
+        title: 'Disipación',
+        level: 'E',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Permite al lanzador negar los poderes de sus enemigos. No tiene ningún efecto sobre capacidades innatas. Tampoco funciona sobre objetos mágicos o encantamientos permanentes. Puede afectar con normalidad a artefactos arcanos (pág. 224).\nPuede lanzarse sobre un poder ya activo o para contrarrestar un poder durante su lanzamiento. Esto último requiere estar en espera e interrumpir la acción del adversario.\nEn ambos casos, disipar un poder enemigo se resuelve como una tirada opuesta de habilidad arcana (con una penalización de -2 si el poder del rival pertenece a otra categoría mágica, como hechicería contra milagros, etc.).\nCuando vence el lanzador de disipación, el poder afectado finaliza de inmediato (o no surte efecto). Con un aumento, el objetivo queda distraído.',
+        modifications: [
+          {
+            title: 'Potencia (+1)',
+            description:
+              'Puede cancelar el funcionamiento de objetos mágicos y reliquias durante una ronda (dos con un aumento). Debe aplicarse una penalización de -2 a la tirada cuando se desea afectar objetos permanentes, o -4 para reliquias divinas y objetos realmente legendarios.',
+          },
+        ],
+      },
+      {
+        title: 'Drenaje de PP',
+        level: 'V',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'El poder se lanza como una tirada opuesta contra el Espíritu del objetivo y el lanzador sufre una penalización de -2 a su tirada si el objetivo practica un Trasfondo Arcano distinto al suyo.\nEl éxito reduce la reserva de PP de su rival en 1d6 (no explota). El aumento permite al lanzador ganar esta misma cantidad para usarla como quiera. En este caso, es posible superar el tamaño de la reserva de puntos de poder. Los PP robados duran hasta que se usen, aunque deben ser los primeros en utilizarse al realizar un lanzamiento.\nCuando se usa sobre un artefacto arcano, drenaje de puntos de poder se resiste con la habilidad arcana del creador, independientemente de si es o no el actual usuario. El artefacto arcano no puede perder más PP de los que tiene.',
+        modifications: [],
+      },
+      {
+        title: 'Empatía',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'El lanzador forma un vínculo emocional entre él mismo y el objetivo del poder, que puede resistirse superando con Espíritu el total del lanzamiento en una tirada opuesta. Con éxito, conocerá el estado emocional del objetivo y sus pensamientos superficiales más básicos. Esto le otorga una bonificación de +1 (+2 con un aumento) a las tiradas de Interpretar, Intimidar, Persuadir y Provocar que realice contra él.\nEmpatía también funciona con animales, aunque en este caso añade +2 a la tirada de Cabalgar u otras tiradas que sirvan para interactuar con la criatura.',
+        modifications: [],
+      },
+      {
+        title: 'Empujón',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Si se lanza con éxito, el mago coloca una plantilla de área mediana dentro de un punto a su alcance o una plantilla de cono surgiendo de sus pies.\nTodos los afectados por la plantilla quedan distraídos y después realizan una tirada de Fuerza (con -2 si el lanzador obtuvo un aumento). Quienes fallen son arrojados 2d6 pasos, alejándoles del lanzador si emplea una plantilla de cono, o del centro de la misma si emplea una plantilla redonda.\nAquellas víctimas que choquen contra un objeto duro, sufren 2d4 de daño (no letal a no ser que se trate de un muro con púas u otra sustancia más peligrosa).\n<b>Objetivos voladores</b>: Las criaturas en el aire afectadas por este hechizo deben aplicar una penalización adicional de -2 a sus tiradas de Fuerza.',
+        modifications: [
+          {
+            title: 'Área distinta (+1)',
+            description:
+              'Por +1 PP, el poder afecta a todos los presentes en una plantilla de área grande.',
+          },
+          {
+            title: 'Potente (+1)',
+            description:
+              'Aplica una penalización de -2 a las tiradas de Fuerza para evitar salir despedido.',
+          },
+        ],
+      },
+      {
+        title: 'Explosión',
+        level: 'E',
+        pp: 3,
+        distance: 'Astucia x2',
+        duration: 'Instantáneo',
+        description:
+          'Explosión arroja un proyectil de energía o materia que explota afectando un área equivalente a una plantilla de área mediana. Todo lo que esté en contacto con la plantilla sufre 2d6 de daño (3d6 con un aumento). Consulta Ataques de área (pág. 144) para los detalles mecánicos.',
+        modifications: [
+          {
+            title: 'Área distinta (+0/+1)',
+            description:
+              'El lanzador puede concentrar o ampliar la explosión para que afecte una plantilla de área pequeña (+0 PP) o grande (+1 PP).',
+          },
+          {
+            title: 'Daño superior (+2)',
+            description: 'La explosión causa 3d6 de daño (4d6 con un aumento).',
+          },
+        ],
+      },
+      {
+        title: 'Gigantismo / enanismo',
+        level: 'E',
+        pp: '2 por pto tamaño',
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          '<i>Gigantismo</i> aumenta el Tamaño del objetivo en uno por cada 2 PP gastados. Cada punto de Tamaño otorga al objetivo también una mejora de un nivel de dado en Fuerza y un punto de Dureza (pag. 260). Incluso si se produce un cambio de escala, este poder no otorga la capacidad de aguantar heridas adicionales.\n<i>Enanismo</i> actúa al revés, reduciendo el Tamaño del objetivo en uno por cada 2 PP, hasta un máximo de Tamaño -2 (más o menos, el tamaño de un gato). Cada punto de Tamaño menos reduce la Fuerza del objetivo en un nivel de dado (mínimo d4) y su Dureza en uno (mínimo 2).\nCuando el objetivo no quiere el cambio, puede resistirse a él tratando el total de lanzamiento como una tirada opuesta contra su Espíritu.',
+        modifications: [],
+      },
+      {
+        title: 'Ilusión',
+        level: 'N',
+        pp: 3,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Ilusión permite crear escenas visuales o réplicas de casi cualquier cosa, pero serán silenciosas, intangibles e incapaces de afectar al mundo real.\nQuienes entren en contacto con una ilusión o duden de su realidad, pueden realizar una tirada de Astucia (-2 si el poder se lanzó con un aumento). El éxito permite a ese individuo ignorar por completo los efectos de este lanzamiento del poder.\nEl DJ debería resolver las tiradas de los Extras como una tirada de grupo, pues se comentarán entre sí las inconsistencias de la ilusión.\nEl volumen máximo de la ilusión debe entrar en una esfera del tamaño de una plantilla de área mediana (cuatro pasos de diámetro).',
+        modifications: [
+          {
+            title: 'Potente (+2)',
+            description:
+              'Aplica una penalización de -2 a las tiradas de Astucia para no creer en el efecto.',
+          },
+          {
+            title: 'Sonido (+1)',
+            description:
+              'El poder genera sonidos apropiados para la ilusión. Los aliados ilusorios pueden hablar, los cuervos ilusorios graznar, etc. No se puede, sin embargo, enmascarar o silenciar otro sonido ya existente.',
+          },
+        ],
+      },
+      {
+        title: 'Intangibilidad',
+        level: 'H',
+        pp: 5,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Quien se beneficie de este poder pasa a ser incorpóreo. Será incapaz de afectar al mundo físico, pero este tampoco le afectará a él. Cualquier objeto y ropa que llevase encima en el momento del lanzamiento también se hará incorpóreo.\nMientras esté incorpóreo, el personaje puede afectar a otros seres incorpóreos con normalidad (incluyendo a él mismo) y es susceptible a los ataques sobrenaturales, incluyendo los poderes y objetos encantados.\nEl personaje no puede recuperar la corporeidad mientras esté dentro de alguien o algo. Si eso ocurre, el usuario es expulsado al instante hasta el espacio abierto más cercano y queda conmocionado.\nEn caso de que el objetivo desee resistirse, puede hacer una tirada opuesta de Espíritu contra la tirada del lanzador.',
+        modifications: [],
+      },
+      {
+        title: 'Invisibilidad',
+        level: 'E',
+        pp: 5,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Al lanzarse con éxito este poder, el objetivo se vuelve transparente, quedando su forma borrosa o dejando una vaga silueta. Los adversarios pueden detectar su presencia casi invisible si tienen una razón para sospechar y superan una tirada de Notar (-4). Una vez detectado, pueden atacar al personaje aplicando una penalización de -4 a sus tiradas. El aumento en la tirada de lanzamiento hace al personaje mucho más indetectable. Aumenta la penalización a Notar y atacarlo hasta -6.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+3)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 3 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Invocación de aliados',
+        level: 'N',
+        pp: 'Especial',
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Permite invocar un sirviente mágico de la nada. El aliado suele tener forma humanoide pero podría ser cualquier otra cosa. Se materializa en un punto a elección del lanzador dentro del alcance. Con un aumento, el aliado gana el rasgo de criatura Duro.\nEl aliado actúa en la carta de acción del lanzador y sigue sus órdenes lo mejor que puede. Cuando el poder finaliza o el aliado queda incapacitado, este se desvanece.\nEl tipo de sirviente que puede invocarse depende del rango del lanzador (pag 240). Con el permiso del DJ, el jugador podría intercambiar capacidades de sus aliados. Por ejemplo, si se quiere representar un lobo, podría cambiar la habilidad Disparar por Supervivencia, de tal modo que el “animal” pueda rastrear a sus adversarios.',
+        modifications: [
+          {
+            title: 'Jinete mental (+1)',
+            description:
+              'El lanzador puede comunicarse mentalmente y utilizar los sentidos del ser invocado.',
+          },
+          {
+            title: 'Mordisco/garras (+1)',
+            description:
+              'El aliado puede morder o desgarrar por FUE+d6 de daño.',
+          },
+          {
+            title: 'Volar (+2)',
+            description: 'El aliado puede volar con Paso 12.',
+          },
+        ],
+      },
+      {
+        title: 'Lectura de mentes',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Lectura de mentes se resuelve como una tirada opuesta contra la Astucia del objetivo. El éxito permite al lanzador obtener una respuesta verdadera del sujeto afectado. Este será consciente de la intrusión mental a no ser que el telépata logre vencer con un aumento. El DJ puede aplicar modificadores a la tirada en base a las desventajas mentales del objetivo o su actual estado mental.',
+        modifications: [],
+      },
+      {
+        title: 'Lectura de objetos',
+        level: 'E',
+        pp: 2,
+        distance: 'Toque',
+        duration: 'Especial',
+        description:
+          'Lectura de objetos es la capacidad de ver en el pasado de un objeto inanimado y descubrir a quién perteneció, dónde ha estado o para qué se ha usado. El objetivo no puede tener consciencia propia: el lanzador simplemente ve (y escucha) visiones del pasado que tuvieron lugar en su presencia.\nEl éxito permite al personaje ver eventos sucedidos a un máximo de diez metros del objeto y cinco años en el pasado. El aumento incrementa estas cantidades a los veinte metros de distancia y el siglo. El lanzador puede “pasar rápido” y “rebobinar” tanto como desee, ojeando por encima hasta diez años de historia por minuto en tiempo real que dedique a la tarea. Cuando contempla un suceso entero, este transcurre en tiempo real, como si se estuviera viendo una película.',
+        modifications: [
+          {
+            title: 'Historia sonora (+2)',
+            description:
+              'El lanzador puede puede ver y, además, escuchar sonidos desde la creación del objeto.',
+          },
+        ],
+      },
+      {
+        title: 'Lenguas',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: '10 min',
+        description:
+          'Este poder permite al personaje hablar, leer y escribir un idioma sapiente que no sea el suyo. Un aumento en la tirada de habilidad arcana permite al usuario comprender además dialectos y argots.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Lentitud *',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Lentitud reduce la celeridad y coordinación del objetivo, mientras que rapidez la incrementa.\nLentitud reduce el movimiento total del personaje en cada ronda a la mitad (redondeando hacia arriba). Con un aumento, moverse cuesta acción. La víctima intenta recuperarse del efecto de forma automática al final de cada uno de sus turnos siguientes, superando una tirada de Espíritu como acción gratuita.',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande',
+          },
+          {
+            title: 'Potente (+1)',
+            description:
+              'Aplica una penalización de -2 a las tiradas de Espíritu para finalizar el efecto.',
+          },
+        ],
+      },
+      {
+        title: 'Rapidez *',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Lentitud reduce la celeridad y coordinación del objetivo, mientras que rapidez la incrementa.\nRapidez, dobla el movimiento del objetivo (su Paso básico más dado de carrera) con un éxito. El aumento, además, permite ignorar la penalización habitual de -2 por correr.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+          {
+            title: 'Velocidad (+1)',
+            description:
+              'Reduce la penalización total por múltiples acciones del individuo en dos puntos (puede realizar dos acciones por turno sin penalización o tres con -2 en cada).',
+          },
+        ],
+      },
+      {
+        title: 'Luz/oscuridad',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '10 min',
+        description:
+          'Luz genera iluminación brillante en una plantilla de área grande. Con el aumento, el lanzador también puede transformarlo en un rayo de cinco pasos (diez metros) de longitud, similar al de una linterna.\nOscuridad bloquea la iluminación en una plantilla de área grande, imponiendo la penalización por oscuridad estándar u oscuridad completa con un aumento (pag 153).\nCuando luz y oscuridad se superponen, se crea una región de penumbra (-2).',
+        modifications: [
+          {
+            title: 'Móvil (+1)',
+            description:
+              'El lanzador puede mover el área de efecto hasta su nivel de dado en la habilidad arcana en pasos por ronda o, durante el lanzamiento, provocar que el efecto provenga de un objeto inanimado.',
+          },
+        ],
+      },
+      {
+        title: 'Manip. de recuerdos',
+        level: 'V',
+        pp: 3,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Altera la memoria de un ser, un crimen terrible en la mayoría de sociedades civilizadas.\nSe resuelve como una tirada opuesta contra la Astucia de la víctima y exige un minuto de brutales escarceos mentales. La víctima debe estar consciente durante este tiempo.\nSi el mentalista tiene éxito, la víctima olvida un único suceso (de treinta minutos de duración). El aumento borra un recuerdo complejo de varias horas.\nSi vence el defensor, el lanzador no será capaz de afectarle con más manipulaciones de recuerdos durante las siguientes veinticuatro horas (otros individuos sí pueden intentarlo).\nLos efectos del poder son permanentes, pero una clara evidencia del recuerdo perdido permite realizar una tirada de Astucia (-2) para empezar a recordar destellos de este (a decisión del DJ).',
+        modifications: [
+          {
+            title: 'Edición (+1)',
+            description:
+              'En vez de borrar un recuerdo, el lanzador puede manipularlo como desee.',
+          },
+          {
+            title: 'Lanzamiento rápido (+2)',
+            description:
+              'El mentalista puede borrar un recuerdo en una sola acción, en vez de en un minuto.',
+          },
+        ],
+      },
+      {
+        title: 'Manip. elemental',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Este poder otorga un control básico sobre las cuatro tradiciones elementales: aire, agua, fuego y tierra (los elementos pueden cambiar en función de la ambientación). El poder actúa como si tuviera Fuerza d6 (d8 con un aumento).\nAlgunos trucos de ejemplo sobre lo que podrías hacer con cada elemento:\n<b>Agua:</b> Conjurar de la nada un litro de agua (no puede ser “dentro” de un ser vivo u objeto), purificar cuatro litros de agua por lanzamiento, etc.\n<b>Aire:</b> Empujar a alguien, apagar una antorcha, avivar una llama, aliviar una plantilla de área mediana contra el calor opresivo (+2 a las tiradas de fatiga por el calor).\n<b>Fuego:</b> Conjurar una llama del tamaño de una antorcha, arrojar un pequeño proyectil ígneo a un adversario (FUE del poder en daño), controlar la expansión de un incendio ya existente (pág. 177), etc.\n<b>Tierra:</b> Mover 30 cm3 de tierra suelta (o la mitad de ello en piedra) cada ronda, ocultar tus huellas.',
+        modifications: [],
+      },
+      {
+        title: 'Marioneta',
+        level: 'V',
+        pp: 3,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Marioneta se resuelve como una tirada opuesta entre el lanzamiento y el Espíritu de la víctima. Si tiene éxito, la víctima obedecerá de forma automática las órdenes que no supongan dañarse a sí mismo o a aquellos que le importan.\nCon un aumento, la víctima está bajo el completo control del mentalista, pero hace una tirada de Espíritu como acción gratuita para evitar dañarse a sí misma o a aquellos que le importan. Con éxito, solo logra evitar la orden específica. Con un aumento, no solo se resiste a ella, sino que rompe el hechizo y este finaliza.\nEl lanzador puede dar órdenes genéricas, como “ataca a esa persona” o “abre esa puerta”. El controlador no dicta cuántas acciones usa una víctima durante su turno o si esta debe usar (o no) ventajas específicas: Barrido, etc.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+2)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 2 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Mejora/red. de rasgo',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '5 o instantáneo',
+        description:
+          '<i>Mejorar el rasgo</i> de un aliado permite aumentar el rasgo en cuestión en un nivel de dado (dos con aumento).\n<i>Reducir el rasgo</i> de un enemigo tiene duración Instantánea y reduce el atributo o habilidad elegida en un nivel de dado (dos con aumento), hasta un mínimo de d4. La víctima intenta recuperarse de forma automática al final de cada uno de sus turnos siguientes, superando una tirada de Espíritu como acción gratuita. El éxito permite recuperar un nivel de dado perdido y el aumento finaliza por completo el efecto.\nNo se puede lanzar varias veces sobre el mismo rasgo (queda activo el efecto mayor), pero sí afectar rasgos diferentes del mismo ser.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+          {
+            title: 'Potente (+1)',
+            description:
+              'Solo reducción. Aplica una penalización de -2 a las tiradas de Espíritu para finalizar el efecto.',
+          },
+        ],
+      },
+      {
+        title: 'Miedo',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Este poder causa una sobrecogedora sensación de pavor y horror. El objetivo afectado debe realizar de inmediato una tirada de miedo. Los extras que fallen su tirada entran en pánico de forma automática y los Comodines deben tirar en la Tabla de terror (pág. 173). Cuando se lanza con aumento, impone una penalización de -2 a la tirada de miedo (y los Comodines añaden +2 a la tirada en la tabla de terror).',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+        ],
+      },
+      {
+        title: 'Protección arcana',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'El éxito a la hora de lanzar protección arcana significa que los poderes hostiles lanzados contra el objetivo sufren una penalización de -2 (-4 con el aumento). Si el poder causa daño, se reduce también en esta misma cantidad.\nProtección arcana se apila con la ventaja Resistencia Arcana, en caso de que el personaje tenga ambas.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Protección física',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Protección física crea un campo energético o sustancia física protectora alrededor del personaje, otorgándole dos puntos de Armadura (con el aumento se convierte en Dureza y, por tanto, no se ve afectado por la PA de los ataques).\nSi la protección generada es visible o no, depende por completo del ornamento (y este del lanzador).\nProtección física se apila con otras armaduras que lleve el objetivo, ya sean naturales o artificiales.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Prot. medioambiental',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '1 hora',
+        description:
+          'Protección medioambiental permite al objetivo respirar, hablar y moverse a su Paso normal en un entorno que, en condiciones estándar, sería letal para él. Protege contra el calor y frío intenso, la radiación, la presión atmosférica o de fluidos e, incluso, contra la falta de oxígeno. En general, asume que el personaje puede actuar con normalidad bajo el agua, en el espacio, dentro de la caldera de un volcán, etc. El poder se desvanece con rapidez (1d4 rondas) en condiciones extremas, como la lava o la enorme radiación que desprende el núcleo fundiéndose de un reactor nuclear.\nProtección medioambiental reduce el daño de este tipo de fuentes en cuatro puntos (seis con aumento). Por ejemplo, si se lanza para que proteja contra el calor extremo, también protegerá contra un lanzallamas o un proyectil con un ornamento de fuego.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Proyectil',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia x2',
+        duration: 'Instantáneo',
+        description:
+          'Proyectil envía descargas de energía, rayos de luz sagrada o esquirlas de materia orgánica hacia tus enemigos.\nNo hay penalizaciones por distancia, pero debes aplicar a la tirada de habilidad arcana cualquier modificador por cobertura, iluminación, etc. que se aplicaría a un ataque a distancia con normalidad.\nEl proyectil causa 2d6 de daño (3d6 con aumento).',
+        modifications: [
+          {
+            title: 'Daño (+2)',
+            description: 'El proyectil causa 3d6 de daño (4d6 con un aumento).',
+          },
+        ],
+      },
+      {
+        title: 'Resurrección',
+        level: 'H',
+        pp: 30,
+        distance: 'Toque',
+        duration: 'Instantáneo',
+        description:
+          'Para resucitar a un fallecido es necesario que su cadáver esté razonablemente completo y no haya transcurrido más de un año desde su defunción. El lanzador reza, medita, canturrea o se concentra de otro modo en la reparación del cuerpo y traer su espíritu de vuelta en un proceso que tarda cuatro horas.\nUna vez hecho, el curandero lanza el poder con una penalización de -8 a su tirada. Si tiene éxito, la víctima retorna a la vida, pasando a estar con tres heridas y exhausta. Con el aumento, regresa simplemente exhausta.',
+        modifications: [
+          {
+            title: 'Tiempo (+5)',
+            description:
+              'El milagrero puede traer de vuelta a gente que lleve fallecida hasta una década.',
+          },
+        ],
+      },
+      {
+        title: 'Silencio *',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Silencio apaga todo el sonido, hasta un grito a plena voz, en una plantilla de área grande. Esto impone una penalización de -4 a las tiradas de Notar de aquellos afectados por la plantilla, así como de quienes intenten escuchar algo originado en su interior. El aumento silencia por completo todo el sonido dentro de la plantilla: las tiradas de Notar fallan de forma automática',
+        modifications: [
+          {
+            title: 'Dirigido (+1)',
+            description:
+              'En vez de lanzar silencio como área de efecto, el lanzador toma como objetivo a individuos específicos dentro de la distancia, a un coste de 1 PP por cada uno. Cada víctima se resiste por separado usando Espíritu (-2 si el poder se lanza con aumento).',
+          },
+          {
+            title: 'Móvil (+1)',
+            description:
+              'El lanzador puede mover el área de efecto hasta su nivel de dado en la habilidad arcana en pasos por ronda.',
+          },
+        ],
+      },
+      {
+        title: 'Sonido *',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia x5',
+        duration: 'Instantáneo',
+        description:
+          'Sonido es capaz de imitar cualquier sonido o voz conocida, emanando de un punto dentro del alcance del poder a una potencia máxima igual a un grito a plena voz. Si se usa como parte de un truco, el defensor se opone al lanzador con su Astucia.',
+        modifications: [
+          {
+            title: 'Móvil (+1)',
+            description:
+              'El lanzador puede mover el área de efecto hasta su nivel de dado en la habilidad arcana en pasos por ronda.',
+          },
+        ],
+      },
+      {
+        title: 'Sueño',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: '1 hora',
+        description:
+          'El objetivo de sueño debe realizar una tirada de Espíritu (-2 si el lanzador obtuvo un aumento). Si falla, queda dormido durante toda la Duración. Los sonidos muy fuertes o los intentos físicos de despertar al durmiente (como agitarlo con fuerza), otorgan una nueva tirada de Espíritu.',
+        modifications: [
+          {
+            title: 'Área de efecto (+2/+3)',
+            description:
+              'Por +2 PP, el poder afecta a todos los presentes en una plantilla de área mediana. Por +3 PP, el efecto aumenta hasta ocupar una plantilla de área grande.',
+          },
+        ],
+      },
+      {
+        title: 'Teleportación',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 'Instantáneo',
+        description:
+          'Permite a un personaje desaparecer y reaparecer instantáneamente hasta a doce pasos (24 m) de distancia (el doble con un aumento). Teletransportarse a una localización que no puede ver impone una penalización de -2 a la tirada de habilidad arcana.\nLos oponentes adyacentes al personaje teletransportado no ganan el ataque gratuito habitual (pág. 139).\nSi se lanza sobre aliados aliados es el lanzador quien decide a dónde se mueven, no ellos',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+          {
+            title: 'Teletransportar enemigo (+2)',
+            description:
+              'Es posible transportar oponentes como ataque de toque (pág. 145). Es una acción, de modo que el poder se lanza como la segunda acción de múltiples si el ataque de toque tiene éxito. Incluso así, el oponente puede resistirse con una tirada opuesta de Espíritu. Se moverá hasta 12 pasos con un éxito y 24 con un aumento de diferencia. No es posible teleportar un enemigo al interior de un objeto sólido.',
+          },
+        ],
+      },
+      {
+        title: 'Telequinesis',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia x2',
+        duration: 5,
+        description:
+          'Telequinesis es la capacidad de mover objetos o criaturas (incluso a uno mismo) mediante capacidades arcanas. El poder tiene Fuerza d10 (Fuerza d12 cuando se lanza con aumento).\nLos objetivos que deseen resistirse pueden realizar una tirada opuesta con su Espíritu cuando son tomados como blanco, así como otra al comienzo de cada uno de sus turnos hasta liberarse. El lanzador puede moverlos en cualquier dirección un máximo de su Astucia en pasos por turno y golpearles contra paredes, techos u otros obstáculos, causando Fuerza+d6 de daño.\nLas criaturas alzadas por los aires y dejadas caer sufren daño por caídas con normalidad.\n<b>Herramientas telequinéticas:</b> El lanzador puede usar telequinesis para utilizar herramientas (incluyendo armas) como acción. Se emplea el propio valor de la habilidad relevante, no la habilidad arcana (por ejemplo, Pelear para atacar). Cualquier daño se calcula con la Fuerza del poder en vez de la del lanzador.',
+        modifications: [],
+      },
+      {
+        title: 'Trepamuros',
+        level: 'N',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Trepamuros permite al objetivo caminar por superficies verticales y cabeza abajo con normalidad. El éxito le permite desplazarse a la mitad de su Paso normal. Con aumento, podrá moverse a su Paso completo y correr.\nSi se ve obligado a realizar una tirada de Atletismo para ascender o quedar pegado a una superficie vertical, el personaje añade una bonificación de +4 a su total.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Ventaja de combate',
+        level: 'E',
+        pp: 4,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Al superar la tirada de habilidad arcana, el objetivo gana los beneficios de una única ventaja de combate elegida por el lanzador. El lanzador (y no el objetivo) debe tener el mismo rango o superior que el indicado entre los requisitos de la ventaja. Con un aumento, el objetivo obtiene los beneficios de la versión mejorada de esa ventaja (si es que existe) y no necesita cumplir sus requisitos de rango.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Vínculo mental',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: '30 minutos',
+        description:
+          'Crea un enlace telepático entre dos individuos (no es necesario que uno sea el lanzador). Solo se forma si los sujetos aceptan el vínculo y sirve para comunicarse de forma activa: no se transmiten pensamientos que no sean enviados conscientemente.\nUna vez activado, el alcance del efecto entre todas las mentes afectadas es de un kilómetro y medio (8 km con un aumento).\nSi cualquiera de los personajes vinculados sufre una herida, todos los demás deben superar una tirada de Astucia o quedarán aturdidos (este aturdimiento no provoca heridas si se apila).\nLa velocidad de la comunicación es igual a la del habla, pero, con un aumento en la tirada, los afectados pueden comunicar hasta treinta segundos de habla en un único turno de combate de seis segundos.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Visión oscura',
+        level: 'N',
+        pp: 1,
+        distance: 'Astucia',
+        duration: '1 hora',
+        description:
+          'Visión oscura permite al objetivo ver en la oscuridad absoluta. El afectado puede ignorar hasta cuatro puntos de penalizaciones por iluminación. Con un aumento, ignora hasta seis puntos y puede ver a la perfección en la oscuridad absoluta.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Vista lejana',
+        level: 'E',
+        pp: 2,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Vista lejana permite al objetivo ver a grandes distancias con precisión. Es capaz de leer los labios de una persona o el texto de un documento hasta a kilómetro y medio de distancia.\nEl aumento también reduce cualquier penalización por distancia a Disparar, Atletismo (lanzar) u otras capacidades a la mitad, redondeando hacia abajo.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+1)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 1 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Vuelo',
+        level: 'V',
+        pp: 3,
+        distance: 'Astucia',
+        duration: 5,
+        description:
+          'Este poder permite al objetivo surcar los aires con Paso 12 volando (el doble con aumento). No es posible “correr” volando con este poder.',
+        modifications: [
+          {
+            title: 'Objetivos adicionales (+2)',
+            description:
+              'Es posible afectar a más de un objetivo, incrementando el coste en 2 PP por blanco adicional.',
+          },
+        ],
+      },
+      {
+        title: 'Zombi*',
+        level: 'V',
+        pp: '3 + tamaño',
+        distance: 'Astucia',
+        duration: '1 hora',
+        description:
+          'Anima y otorga inteligencia básica a los restos de un ser vivo ya fallecido. Éste es obediente, pero muy literal en la interpretación de sus tareas. No tiene telepatía y es necesario controlarlo mediante la voz.\nEl ser conserva las mismas habilidades físicas que tuvo en vida, pero su Astucia, Espíritu y habilidades asociadas se reducen a d4. Un aumento en la tirada de habilidad arcana aumenta uno de los rasgos del zombi en un nivel de dado (a elección del lanzador).\nEn la página 277 encontrarás la plantilla del típico zombi humano. Este poder no invoca el cadáver de la nada.\nCuando un sirviente muerto viviente animado mediante este poder es destruido, no puede animarse de nuevo.\n<i>Más información en pág. 251</i>',
+        modifications: [],
+      },
+      {
+        title: 'Zombi*',
+        level: 'V',
+        pp: '3 + tamaño',
+        distance: 'Astucia',
+        duration: '1 hora',
+        description: '',
+        modifications: [
+          {
+            title: 'Armado (+1 por zombi)',
+            description:
+              'Los muertos se alzan equipados con un arma que sea común en la ambientación.\n<ul><li>Arma a distancia: Distancia 12/24/48, 2d6 de daño.</li><li>\nArma c/c: FUE+d6 de daño.</li></ul>',
+          },
+          {
+            title: 'Blindado (+1 por zombi)',
+            description:
+              'Estos horrores surgen equipados con una armadura de dos puntos.',
+          },
+          {
+            title: 'Eterno (especial)',
+            description:
+              'El zombi dura hasta que lo “maten” de nuevo. No tiene coste adicional en PP, pero los puntos quedan invertidos permanentemente en la criatura hasta que sea destruida. El necromante que creó al zombi puede destruirlo cuando lo desee, sin importar distancia u otros factores. Hasta entonces, ¡el zombi seguirá animado incluso si su creador fallece!',
+          },
+          {
+            title: 'Jinete mental (+1)',
+            description:
+              'El lanzador puede comunicarse mentalmente y utilizar los sentidos de cualquier zombi que haya conjurado. Si es destruido, puede saltar de inmediato a cualquier otro que esté bajo su control.',
+          },
+          {
+            title: 'Zombis extras (+1)',
+            description: '1 PP por cada zombi adicional.',
+          },
+        ],
+      },
+    ];
+
+    function getValueInjector(parent) {
+      return function (selector, content, htmlInjection) {
+        const element = parent.querySelector(selector);
+        if (!htmlInjection) {
+          element.innerText = content;
+          return;
+        }
+        element.innerHTML = content;
+      };
+    }
+    window.onload = function () {
+      const container = document.getElementById('container');
+      const template = document.getElementById('template');
+      powers.forEach((power) => {
+        const newCard = template.cloneNode(true);
+        newCard.classList.remove('hidden');
+        const injector = getValueInjector(newCard);
+        injector('.card__level', power.level);
+        injector('.card__name', power.title);
+        injector('.card__other-info td:first-child', power.pp);
+        injector('.card__other-info td:nth-child(2)', power.distance);
+        injector('.card__other-info td:nth-child(3)', power.duration);
+        injector(
+          '.card__body div',
+          `<p>${power.description.replaceAll('\n', '</p><p>')}</p>`,
+          true
+        );
+        if (power.modifications.length) {
+          const modificationsMrkdwn = power.modifications.reduce(
+            (acc, modification) => {
+              return `${acc}<li><b>${modification.title}:</b> ${modification.description}</li>`;
+            },
+            ''
+          );
+          injector('.card__modifications', modificationsMrkdwn, true);
+        }
+        container.appendChild(newCard);
+      });
+    };
+  </script>
+  <style>
+    body {
+      margin: 0;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .card {
+      border: 1px solid black;
+      font-family: sans-serif;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      height: 9.2cm;
+    }
+    .card__header {
+      position: relative;
+    }
+    .card__level {
+      padding: 0.5rem 0.25rem 0.2rem;
+      background-color: #b4b2b2;
+      position: absolute;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      height: calc(1.2rem + 1px);
+    }
+    .card__name {
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 1px #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      padding-top: 0.5rem;
+      padding-bottom: 0.2rem;
+    }
+    .card__other-info {
+      background-color: #6a6a6a;
+      color: #fff;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .card__other-info td {
+      padding-bottom: 5px;
+    }
+    .card__other-info th {
+      padding-top: 5px;
+    }
+    .card__other-info td,
+    .card__other-info th {
+      text-align: center;
+    }
+    .card__other-info td:not(:last-child),
+    .card__other-info th:not(:last-child) {
+      border-right: 2px solid #fff;
+    }
+    .card__body {
+      font-size: 10px;
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .card__body > div:first-child {
+      padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+      flex: 1 0 auto;
+    }
+    .card__body p {
+      margin-bottom: 0;
+      margin-block-start: 0;
+      margin-block-end: 0.2rem;
+    }
+    .card__modifications {
+      margin: 0;
+    }
+    .card__modifications:has(li) {
+      margin-block-end: 0.2rem;
+      padding: 0.2rem 0.5rem 0 1rem;
+      border-top: 2px solid #b4b2b2;
+    }
+    .card.hidden {
+      display: none;
+    }
+    @media screen {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        font-size: 16px;
+        height: auto;
+      }
+      .card__level {
+        background-color: #ff6500;
+        font-size: 1.5rem;
+        height: calc(1.5rem + 1px);
+      }
+      .card__name {
+        font-size: 1.5rem;
+        color: #0b192c;
+      }
+      .card__other-info {
+        background-color: #1e3e62;
+      }
+      .card__body {
+        font-size: 16px;
+      }
+      .card__body p {
+        margin-block-end: 0.5rem;
+      }
+      .card__body > div:first-child {
+        padding: 1rem;
+      }
+      .card__modifications:has(li) {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container" class="container">
+    <div class="card hidden" id="template">
+      <div class="card__header">
+        <div class="card__level"></div>
+        <div class="card__name"></div>
+        <table class="card__other-info">
+          <tr>
+            <th>Pts. poder</th>
+            <th>Rango</th>
+            <th>Duración</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="card__body">
+        <div></div>
+        <ul class="card__modifications"></ul>
+      </div>
+    </div>
+  </div>
+</body>
