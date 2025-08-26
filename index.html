@@ -1124,10 +1124,15 @@
     @media screen {
       .container {
         grid-template-columns: 1fr;
+        justify-items: center;
+        grid-gap: 2rem;
+        background-color: #ede9e9;
       }
       .card {
-        font-size: 1rem;
+        font-size: 16px;
         height: auto;
+        max-width: 50rem;
+        background-color: #fff;
       }
       .card__level {
         background-color: #ff6500;
@@ -1142,7 +1147,7 @@
         background-color: #1e3e62;
       }
       .card__body {
-        font-size: 1rem;
+        font-size: 16px;
       }
       .card__body p {
         margin-block-end: 0.5rem;
@@ -1151,10 +1156,7 @@
         padding: 1rem;
       }
       .card__modifications:has(li) {
-        padding: 1rem;
-      }
-      .card__modifications li {
-        padding-block-end: 0.5rem;
+        padding: 1rem 1rem 1rem 1.5rem;
       }
     }
   </style>
